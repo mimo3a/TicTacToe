@@ -19,21 +19,21 @@ public class TicTacToe extends Applet implements ActionListener {
 	int lostTimes ;
 	TextField textFieldWon;
 	
-	// метод init это конструктор апплета
+	// method init is a constructor of applet
 	
 	public void init() {
-//		устанавливаем менеджер расположения апплета шрифт и цвет
+//		set applet layout manager font and color
 		
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.CYAN);
 		this.setSize(320,320);
 		
-//		шрифт апплета жирный и имеет размер 20
+//		the applet font is bold and has a size of 20
 		
 		Font appletFont = new Font("Monospaset", Font.BOLD, 20);
 		this.setFont(appletFont);
 		
-//		создаем кнопку "New game" и регистрируем в ней слушатель действия
+//		create a button "New game" and register an action listener in it
 		
 		newGameButton = new Button("New Game");
 		newGameButton.addActionListener(this);
@@ -63,12 +63,12 @@ public class TicTacToe extends Applet implements ActionListener {
 		score = new Label("Your turn!");
 		this.add(score, "South");
 		
-		// создаем массив для хранения ссылок на 9 кнопок
+		// create an array to store links to 9 buttons
 		
 		squares = new Button[9];
 		
-//		создаем кнопки сохраняем ссылки на них в массиве регистрируем в их слушатель красим их
-// 		в оранжевый цвет и добавляем на панель
+//		create buttons save links to them in an array register them in their listener paint them
+// 		to orange and add to the panel
 		
 		for(int i = 0; i<9; i++) {
 			squares[i] = new Button();
@@ -78,12 +78,12 @@ public class TicTacToe extends Applet implements ActionListener {
 		}
 	}
 	
-//		Этот метод будет обрабатывать все события	
+//		This method will handle all events
 	
 	public void actionPerformed(ActionEvent e) {
 		
 		Button theButton = (Button) e.getSource();
-//		Это кнопка "New Game"
+//		it is a button "New Game"
 		
 		if(theButton == newGameButton) {
 			for(int i = 0; i<9; i++) {
@@ -102,7 +102,7 @@ public class TicTacToe extends Applet implements ActionListener {
 		}
 		String winner = "";
 		
-//		это одна из клеток
+//		it is one of squares
 		for(int i = 0; i<9; i++) {
 			if(theButton == squares[i]) {
 				squares[i].setLabel("X");
@@ -123,7 +123,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				}
 				break;
 			}
-		}	// конец цикла for
+		}	// end loop for
 		
 		if(winner.equals("X")) {
 			score.setText("You won!");
@@ -143,11 +143,11 @@ public class TicTacToe extends Applet implements ActionListener {
 		} else if(winner.equals("T")) {
 			score.setText("It`s a tie!");
 		}					
-	}		// кшнец метода actionPerformed
+	}		// end of method actionPerformed
 	/**
-	 * Этот метод вызывается после каждого хода что-бы узнать есть-ли победитель
-	 * Он проверяет каждый ряд колонку и диагональ, что-бы найти три клетки с одинаковыми надписями 
-	 * (не пустыми) "T" = ничья, "" = еще нет победителя 
+	 * This method is called after each move to find out if there is a winner.
+	 * It checks each row, column and diagonal to find three cells with the same label. 
+	 * (not empty) "T" = tie, "" = no winner yet
 	 */
 	String lookForWinner() {
 		String theWinner = "";
@@ -158,7 +158,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			return "T";
 		} 
 		
-//		проверяем ряд 1 - элементы массива 0, 1, 2
+//		check row 1 - array elements 0, 1, 2
 		
 		if(!squares[0].getLabel().equals("") &&
 			
@@ -167,7 +167,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			theWinner = squares[0].getLabel();
 			highLightWinner(0,1,2);
 			
-//			провкряем ряд 2 - элементы массива 3, 4, 5
+//			check row 2 - array elements 3, 4, 5
 						
 		} else if(!squares[3].getLabel().equals("") &&
 					squares[3].getLabel().equals(squares[4].getLabel()) &&
@@ -175,7 +175,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				theWinner = squares[3].getLabel();
 				highLightWinner(3,4,5);
 				
-//			проверяем ряд 3 - элементы массива 6,7,8				
+//			check row 3 - array elements 6,7,8			
 				
 		 } else if(!squares[6].getLabel().equals("") &&
 				    squares[6].getLabel().equals(squares[7].getLabel()) &&
@@ -183,7 +183,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			 theWinner = squares[6].getLabel();
 			 highLightWinner(6,7,8);
 			 
-//			 проверяем колонку 1 - элементы массива 0,3,6
+//			 check row 1 - array elements 0,3,6
 			 
 		  } else if(!squares[0].getLabel().equals("") &&
 				  squares[0].getLabel().equals(squares[3].getLabel()) &&
@@ -191,7 +191,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			  theWinner = squares[0].getLabel();
 			  highLightWinner(0,3,6);
 			  
-//			  проверяем колонку 2 элементы массива 1,4,7
+//			  checking the column 2 array elements 1,4,7
 			  
 		  } else if(!squares[1].getLabel().equals("") &&
 				  squares[1].getLabel().equals(squares[4].getLabel()) &&
@@ -199,7 +199,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			  theWinner = squares[1].getLabel();
 			  highLightWinner(1,4,7);
 			  
-//			  проверяем колонку 3 элементы массива 2,5,8
+//			  checking the column 3 array elements 2,5,8
 			  
 		  } else if(!squares[2].getLabel().equals("") &&
 				  squares[2].getLabel().equals(squares[5].getLabel()) &&
@@ -207,14 +207,14 @@ public class TicTacToe extends Applet implements ActionListener {
 			  theWinner = squares[2].getLabel();
 			  highLightWinner(2,5,8);
 			  
-//			  проверяем первую диагональ элементы массива 0,4,8
+//			  check the first diagonal array elements 0,4,8
 			  
 		  } else if(!squares[0].getLabel().equals("") &&
 				  squares[0].getLabel().equals(squares[4].getLabel()) &&
 				  squares[0].getLabel().equals(squares[8].getLabel())) {
 			  theWinner = squares[0].getLabel();
 			  highLightWinner(0,4,8);
-//			  проверяем вторую диагональ элементы массива 2,4,6
+//			  check the second  diagonal array elements 2,4,6
 			  
 		  } else if (!squares[2].getLabel().equals("") &&
 				  squares[2].getLabel().equals(squares[4].getLabel()) &&
@@ -226,32 +226,32 @@ public class TicTacToe extends Applet implements ActionListener {
 		}
 		
 		/**
-		 * этод метод применяет набор правил что=бы найти лучший компьютерный ход
-		 * не найден - выбирается случайная клетка
+		 * this method applies a set of rules to find the best computer move
+		 * not found - a random cell is selected
 		 */
 		
 		void computerMove() {
 			int selectedSquare;
 			
-//			сначала компьютер пытается найти пустую клетку
-// 			рядом с двумя клетками с ноликами чтобы выиграть
+//			irst the computer tries to find an empty cell
+//			 next to two cells with zeros to win
 			
 			selectedSquare = findEmptySquare("O");
 			
-//			если он не может найти два нолика то не дает сделать ряд из трех крестиков
-//			поместив нолик рядом с лвумя крестиками
+//			if he cannot find two zeroes, then he does not allow him to make a row of three crosses
+//			 by placing a zero next to two crosses
 			
 			if(selectedSquare == -1)  {
 				
 				selectedSquare = findEmptySquare("X");
 			}
 			
-//			если selectedSquare все еще равен -1 то занимает центральную клетку
+//			if selectedSquare is still -1 then it occupies the center square
 			
 			if((selectedSquare == -1) && (squares[4].getLabel().equals(""))) {
 				selectedSquare = 4;
 			}
-//			если не повезло с центральной клеткой то занимаем случайную
+//			f you are unlucky with the central cell, then we take a random one
 			
 			if(selectedSquare == -1) {
 				selectedSquare = getRandomSquare();
@@ -261,11 +261,11 @@ public class TicTacToe extends Applet implements ActionListener {
 			squares[selectedSquare].setEnabled(false);
 		}
 		/**
-		 * Этот метод проверяет каждый ряд, колонку и диагональ, что-бы узнать, есть ли в ней
-		 * две клетки с одинаковыми надписями и пустой клеткой
-		 * @param передается Х для пользователя и О для компьютера
-		 * @return количество свободных клеток или -1 если не найдено 2 клетки 
-		 * с одинаковыми надписями
+		 * This method checks each row, column, and diagonal to see if it contains
+		 * two cells with the same captions and an empty cell
+		 *@param is passed X for user and O for computer
+		 *@return number of free cells or -1 if 2 cells are not found
+		 * with the same inscriptions
 		 */
 		int findEmptySquare(String player) {
 			int weight[] = new int[9];
@@ -280,7 +280,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			}
 			int twoWeights = player.equals("O") ? -2 : 2;
 			
-//			проверяем есть ли в ряду 1 две одинаковые клетки и одна пустая
+//			check if there are two identical cells and one empty in row 1
 			
 			if(weight[0] + weight[1] + weight[2] == twoWeights) {
 				if(weight[0] == 0)
@@ -289,7 +289,7 @@ public class TicTacToe extends Applet implements ActionListener {
 					return 1;
 				else return -2;
 			}
-//			проверяем есть ли в ряду 2 две одинаковые клетки и одна пустая
+//			check if there are two identical cells and one empty in row 2
 			
 			if(weight[3] + weight[4] + weight[5] == twoWeights) {
 				if(weight[3] == 0)
@@ -299,7 +299,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 5;			
 			}
 			
-//			проверяем есть ли в ряду 2 две одинаковые клетки и одна пустая
+//			check if there are two identical cells and one empty in row 3
 			
 			if(weight[6] + weight[7] + weight[8] == twoWeights) {
 				if(weight[6] == 0)
@@ -309,7 +309,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 8;			
 			}
 			
-//			проверяем есть ли в колонке 1  две одинаковые клетки и одна пустая	
+//			check if there are two identical cells and one empty in column 1
 			
 			if(weight[0] + weight[3] + weight[6] == twoWeights) {
 				if(weight[0] == 0)
@@ -319,7 +319,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 6;			
 			}
 			
-//			проверяем есть ли в колонке 2  две одинаковые клетки и одна пустая	
+//			check if there are two identical cells and one empty in column 2	
 			
 			if(weight[1] + weight[4] + weight[7] == twoWeights) {
 				if(weight[1] == 0)
@@ -329,7 +329,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 7;			
 			}
 			
-//			проверяем есть ли в колонке 3  две одинаковые клетки и одна пустая
+//			check if there are two identical cells and one empty in column 3
 			
 			if(weight[2] + weight[5] + weight[8] == twoWeights) {
 				if(weight[2] == 0)
@@ -339,7 +339,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 8;			
 			}
 			
-//			проверяем есть ли в диагонали 1  две одинаковые клетки и одна пустая
+//			check if there are two identical cells and one empty in diagonal 1
 			
 			if(weight[0] + weight[4] + weight[8] == twoWeights) {
 				if(weight[0] == 0)
@@ -349,7 +349,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 8;			
 			}
 			
-//			проверяем есть ли в диагонали 2 две одинаковые клетки и одна пустая	
+//			check if there are two identical cells and one empty in diagonal 2
 			
 			if(weight[2] + weight[4] + weight[6] == twoWeights) {
 				if(weight[2] == 0)
@@ -359,14 +359,14 @@ public class TicTacToe extends Applet implements ActionListener {
 				else return 6;			
 			}
 			
-//			не найдено двух одинаковых соседних клеток
+//			no two identical adjacent cells found
 			
 			return -1;			
-		} // конец метода findEmptySquare()
+		} // end of findEmptySquare() method
 		
 		/**
-		 * Этот метод выбирает любую пустую клетку
-		 * @return случайно выбраный еомер клетки
+		 * This method selects any empty cell
+		 * @return randomly selected cell number
 		 */
 		
 		int getRandomSquare() {
@@ -382,11 +382,11 @@ public class TicTacToe extends Applet implements ActionListener {
 			
 			
 			return selectedSquare;
-		} // конец метода getRandomSquare
+		} // end of method getRandomSquare
 		
 		/**
-		 * Этот метод выделяет выигравшую линию
-		 * @param первая, вторая и третья клетка для выделения
+		 * This method highlights the winning line
+		 * @param first, second and third cells to highlight
 		 */
 		
 		void highLightWinner(int win1, int win2, int win3) {
@@ -396,7 +396,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			squares[win3].setBackground(Color.CYAN);			
 		}
 		
-//		делаем недоступными клетки и доступной енопку "New Game"
+//		we make the cells not available and the "New Game" button available
 		
 		void endTheGame() {
 			
@@ -411,5 +411,5 @@ public class TicTacToe extends Applet implements ActionListener {
 			new TicTacToe();
 		}
 		
-	} //конец класса
+	} //end of class
 
