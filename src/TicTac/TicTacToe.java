@@ -4,6 +4,8 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 
+import javax.swing.SingleSelectionModel;
+
 
 public class TicTacToe extends Applet implements ActionListener {
 	
@@ -12,7 +14,7 @@ public class TicTacToe extends Applet implements ActionListener {
 	Label score;
 	Label labelWon;
 	Label labelLost;
-	int emptySquaresLeft;
+	int emptySquaresLeft =9;
 	int wonTimes ;
 	int lostTimes ;
 	TextField textFieldWon;
@@ -41,20 +43,16 @@ public class TicTacToe extends Applet implements ActionListener {
 		topPanel.setFont(topPanelFont);
 		topPanel.setLayout(new FlowLayout());
 		
-		TextField textFieldWon = new TextField(3);		
-//		textFieldWon.setText(Integer.toString(this.wonTimes));
 		
-		TextField textFieldLost = new TextField(3);			
-//		textFieldLost.setText(Integer.toString(this.lostTimes));
 		
 		Label labelWon = new Label("You won");
 		Label labelLost = new Label("You lost");
 		
 		topPanel.add(newGameButton);
-		topPanel.add(labelWon);
-		topPanel.add(textFieldWon);
+		topPanel.add(labelWon);		
 		topPanel.add(labelLost);
-		topPanel.add(textFieldLost);
+		
+		
 		
 		this.add(topPanel, "North");
 		
@@ -116,6 +114,7 @@ public class TicTacToe extends Applet implements ActionListener {
 				} else {
 					
 					computerMove();
+					System.out.println("Hier");
 					winner = lookForWinner();
 					
 					if(!"".equals(winner)) {
@@ -128,7 +127,12 @@ public class TicTacToe extends Applet implements ActionListener {
 		
 		if(winner.equals("X")) {
 			score.setText("You won!");
-			labelWon.setText(winner);
+			try {
+				labelWon.setText(winner);
+			} catch (Exception e1) {
+				
+				System.out.println("Etwas geht nicht richtig");
+			}
 			wonTimes++;
 			System.out.println("Won times" + wonTimes);	
 //			textFieldWon.setText(Integer.toString(this.wonTimes));
@@ -148,10 +152,11 @@ public class TicTacToe extends Applet implements ActionListener {
 	String lookForWinner() {
 		String theWinner = "";
 		emptySquaresLeft --;
+		System.out.println("empty Squares = " + emptySquaresLeft);
 		
 		if(emptySquaresLeft == 0) {
 			return "T";
-		}
+		} 
 		
 //		проверяем ряд 1 - элементы массива 0, 1, 2
 		
@@ -367,12 +372,15 @@ public class TicTacToe extends Applet implements ActionListener {
 		int getRandomSquare() {
 			boolean gotEmptySquare = false;
 			int selectedSquare = -1;
+			
 			do {
 				selectedSquare = (int) (Math.random() * 9);
 				if(squares[selectedSquare].getLabel().equals("")) {
 					gotEmptySquare = true; // что-бы закончить цикл					
 				}
 			} while (!gotEmptySquare);
+			
+			
 			return selectedSquare;
 		} // конец метода getRandomSquare
 		
