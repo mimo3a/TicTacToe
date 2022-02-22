@@ -4,10 +4,11 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 
+import javax.swing.JFrame;
 import javax.swing.SingleSelectionModel;
 
 
-public class TicTacToe extends Applet implements ActionListener {
+public class TicTacToe implements ActionListener {
 	
 	Button squares [];
 	Button newGameButton;
@@ -18,20 +19,22 @@ public class TicTacToe extends Applet implements ActionListener {
 	int wonTimes ;
 	int lostTimes ;
 	TextField textFieldWon;
+	Panel mainPanel;
 	
-	// method init is a constructor of applet
 	
-	public void init() {
+	
+	public TicTacToe() {
 //		set applet layout manager font and color
+		Panel mainPanel = new Panel();
 		
-		this.setLayout(new BorderLayout());
-		this.setBackground(Color.CYAN);
-		this.setSize(320,320);
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setBackground(Color.CYAN);
+
 		
 //		the applet font is bold and has a size of 20
 		
 		Font appletFont = new Font("Monospaset", Font.BOLD, 20);
-		this.setFont(appletFont);
+		mainPanel.setFont(appletFont);
 		
 //		create a button "New game" and register an action listener in it
 		
@@ -54,14 +57,14 @@ public class TicTacToe extends Applet implements ActionListener {
 		
 		
 		
-		this.add(topPanel, "North");
+		mainPanel.add(topPanel, "North");
 		
 		Panel centerPanel = new Panel();
 		centerPanel.setLayout(new GridLayout(3,3));
-		this.add(centerPanel, "Center");
+		mainPanel.add(centerPanel, "Center");
 		
 		score = new Label("Your turn!");
-		this.add(score, "South");
+		mainPanel.add(score, "South");
 		
 		// create an array to store links to 9 buttons
 		
@@ -76,6 +79,11 @@ public class TicTacToe extends Applet implements ActionListener {
 			squares[i].setBackground(Color.ORANGE);
 			centerPanel.add(squares[i]);
 		}
+		JFrame frame = new JFrame("TicTacToe");
+		frame.setContentPane(mainPanel);
+		frame.pack();
+		frame.setSize(320, 400);
+		frame.setVisible(true);
 	}
 	
 //		This method will handle all events
@@ -108,13 +116,12 @@ public class TicTacToe extends Applet implements ActionListener {
 				squares[i].setLabel("X");
 				squares[i].setEnabled(false);
 				winner = lookForWinner();
-				System.out.println("winner = " + winner);
+				
 				if(!"".equals(winner)) {
 					endTheGame();
 				} else {
 					
 					computerMove();
-					System.out.println("Hier");
 					winner = lookForWinner();
 					
 					if(!"".equals(winner)) {
@@ -123,18 +130,19 @@ public class TicTacToe extends Applet implements ActionListener {
 				}
 				break;
 			}
-		}	// end loop for
+		}	// end the loop for
 		
 		if(winner.equals("X")) {
 			score.setText("You won!");
+			wonTimes++;
 			try {
-				labelWon.setText(winner);
+				labelWon.setText(Integer.toString(wonTimes));
 			} catch (Exception e1) {
 				
 				System.out.println("Etwas geht nicht richtig");
 			}
-			wonTimes++;
-			System.out.println("Won times" + wonTimes);	
+			
+			System.out.println("Won times\t" + wonTimes);	
 //			textFieldWon.setText(Integer.toString(this.wonTimes));
 			
 		} else if (winner.equals("O")) {
@@ -225,7 +233,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			return theWinner;
 		}
 		
-		/**
+		/*
 		 * this method applies a set of rules to find the best computer move
 		 * not found - a random cell is selected
 		 */
@@ -404,7 +412,7 @@ public class TicTacToe extends Applet implements ActionListener {
 			for(int i = 0; i<9; i++) {
 				squares[i].setEnabled(false);
 			}
-			System.out.println("New Game");
+			
 		}
 		
 		public static void main(String[] args) {
